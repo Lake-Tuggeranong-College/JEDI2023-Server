@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $userName = $data->userName;
     $moduleData = $data->moduleData;
     $moduleName = $data->moduleName;
-    $api_key = $data->apiKeyValue;
+    $api_key = $data->api_key;
     date_default_timezone_set('Australia/Canberra');
     $date = date("Y-m-d H:i:s");
 
@@ -36,7 +36,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (password_verify($api_key, $hashed_password)) {
         $payloadJSON = ['command' => $payload];
-
     } else {
         $payloadJSON = ['command' => 'Password Error'];
     }
