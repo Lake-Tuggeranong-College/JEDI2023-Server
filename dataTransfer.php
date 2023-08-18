@@ -28,6 +28,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bindValue(':moduleName', $moduleName);
     $stmt->bindValue(':datePosted', $date);
     $stmt->execute();
+
+    $query = $conn->query("SELECT command, hashedPassword FROM moduleCommands WHERE actuator='$moduleName'");
+    $queryData = $query->fetch();
+    $payload = $queryData["command"];
+    $hashed_password = $queryData["hashedPassword"];
+
+    if (password_verify($api_key, $hashed_password)) {
+        $payloadJSON = ['command' => $payload];
+
+    } else {
+        $payloadJSON = ['command' => 'Password Error'];
+    }
+    header('Content-type: application/json');
+    echo json_encode($payloadJSON);
+
+
     $conn->close();
 } else {
     echo "This page is only accessible via POSTing from ESP32s..";
