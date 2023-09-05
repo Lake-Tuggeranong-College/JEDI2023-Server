@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // example of extracting one element of json object
     // $api_key = $data->api_key;
-    $userName = $data->userName;
+    // $userName = $data->userName;
     $moduleName = $data->moduleName;
     $api_key = $data->api_key;
     date_default_timezone_set("Australia/Canberra");
