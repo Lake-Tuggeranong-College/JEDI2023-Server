@@ -10,18 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // example of extracting one element of json object
     // $api_key = $data->api_key;
-    $userName = $data->userName;
+    //$userName = $data->userName;
     $moduleName = $data->moduleName;
     $api_key = $data->api_key;
     date_default_timezone_set("Australia/Canberra");
     $date = date("Y-m-d H:i:s");
 
-    $sql = "SELECT command, hashedPassword FROM moduleCommands WHERE actuator='$moduleName'";
-    $query = $conn->query($sql);
-    $data = $query->fetch();
-    $payload = $data["command"];
-    $hashed_password = $data["hashedPassword"];
-    echo $data;
+    $query = $conn->query("SELECT command, hashedPassword FROM moduleCommands WHERE actuator='$moduleName'");
+    $queryData = $query->fetch();
+    $payload = $queryData["command"];
+    $hashed_password = $queryData["hashedPassword"];
+
     if (password_verify($api_key, $hashed_password)) {
         $payloadJSON = ["command" => $payload];
     } else {
